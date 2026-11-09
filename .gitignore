@@ -1,0 +1,23 @@
+# ビルド成果物
+target/
+out/
+*.class
+
+# 環境変数・秘密情報（パスワードはここに置き、Git に入れない）
+.env
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# エディタ・IDE
+.vscode/
+.idea/
+*.iml
+*.swp
+*~
+
+# 一時ファイル
+*.tmp
+*.bak
