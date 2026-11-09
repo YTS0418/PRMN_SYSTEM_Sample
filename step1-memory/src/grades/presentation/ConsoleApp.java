@@ -26,7 +26,7 @@ public class ConsoleApp {
     private static class InputEnded extends RuntimeException { }
 
     public void run() {
-        System.out.println("=== 成績管理システム（step1：保存先はメモリ）===");
+        System.out.println("=== 成績管理システム ===");
         try {
             while (true) {
                 System.out.println();
@@ -41,7 +41,7 @@ public class ConsoleApp {
                         case "2" -> recordScore();
                         case "3" -> showTranscript();
                         case "0" -> {
-                            System.out.println("終了します（データは消えます）");
+                            System.out.println("終了します");
                             return;
                         }
                         default -> System.out.println("0〜3 から選んでください");
