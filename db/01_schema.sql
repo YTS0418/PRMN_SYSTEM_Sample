@@ -2,6 +2,9 @@
 -- 対応する資料：データベース編 06 章（物理設計）、08 章（DDL）
 -- 何度でも流し直せるよう、先に消してから作る（学習用。本番では絶対にしない）
 --   psql -U postgres -d grades_db -f db/01_schema.sql
+--     -U postgres   接続するユーザー（User）の名前
+--     -d grades_db  接続するデータベース（database）の名前
+--     -f ファイル   実行する SQL ファイル（file）。リポジトリのルートから見たパス
 
 -- 子（参照する側）から先に消す
 DROP TABLE IF EXISTS enrollments CASCADE;
