@@ -2,8 +2,8 @@ package grades.presentation;
 
 import grades.domain.保存失敗例外;
 import grades.domain.学生;
-import grades.domain.成績一覧;
-import grades.domain.成績明細;
+import grades.usecase.成績一覧;
+import grades.usecase.成績明細;
 import grades.domain.科目;
 import grades.usecase.学生を登録する;
 import grades.usecase.学生一覧を表示する;

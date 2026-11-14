@@ -1,4 +1,4 @@
-package grades.domain;
+package grades.usecase;
 
 import java.util.List;
 

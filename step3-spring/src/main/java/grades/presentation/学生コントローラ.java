@@ -2,8 +2,8 @@ package grades.presentation;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import grades.domain.学生;
-import grades.domain.成績一覧;
-import grades.domain.成績明細;
+import grades.usecase.成績一覧;
+import grades.usecase.成績明細;
 import grades.usecase.学生を登録する;
 import grades.usecase.成績を登録する;
 import grades.usecase.成績一覧を表示する;

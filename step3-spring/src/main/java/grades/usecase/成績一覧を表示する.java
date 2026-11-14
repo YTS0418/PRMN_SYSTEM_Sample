@@ -5,8 +5,6 @@ import grades.domain.学生リポジトリ;
 import grades.domain.履修;
 import grades.domain.履修リポジトリ;
 import grades.domain.履修一覧;
-import grades.domain.成績一覧;
-import grades.domain.成績明細;
 import grades.domain.科目;
 import grades.domain.科目リポジトリ;
 import org.springframework.stereotype.Service;
@@ -48,7 +46,7 @@ public class 成績一覧を表示する {
         for (履修 履修 : 履修一覧.履修リスト()) {
             科目 科目 = 科目リポジトリ.探す(履修.科目ID())
                     .orElseThrow(() -> new NoSuchElementException("科目が見つかりません: " + 履修.科目ID()));
-            明細リスト.add(履修.成績明細にする(科目));
+            明細リスト.add(new 成績明細(科目.科目名(), 科目.単位数(), 履修.年度(), 履修.点数(), 履修.合格している()));
         }
 
         // 4. 平均点を履修一覧で計算する
