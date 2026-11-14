@@ -115,6 +115,10 @@ java src/grades/Main.java
 
 点数に `150` を入れると、`エラー: 点数は0〜100にしてください: 150` と表示されます。このエラーはドメイン層（`履修`）が出したものです。
 
+> [!WARNING]
+> **Windows のコマンドプロンプトで、入力した日本語（学生の名前など）が文字化けするとき**：先に `chcp 65001` を実行してから `java` を実行してください（コンソールの文字コードを UTF-8 にします）。
+> **IntelliJ IDEA で、`Main.java` が読み取り専用（コーヒーのマーク）になって実行できないとき**：`step1-memory` の下の `src` を右クリックして、「ディレクトリをマーク」→「ソース ルート」を選びます。
+
 ## データベースを用意する（step2・step3 の前に）
 
 PostgreSQL にデータベース `grades_db` を作り、テーブルとサンプルデータを入れます。**リポジトリのルート**で実行してください。
@@ -140,6 +144,9 @@ psql -U postgres -d grades_db -f db/02_seed.sql
 - `-c` も `-f` も付けずに `psql -U postgres -d grades_db` とすると、SQL を 1 行ずつ打ち込める画面になります（`\q` で終了）。
 
 > [!WARNING]
+> **Windows で `enrollments` や外部キー（`foreign key`）のエラーが出るとき**：`psql` の文字コードが UTF-8 ではないのが原因です。`.sql` ファイルの日本語を読み違えて、一部の `INSERT` が失敗し、そのあとの `INSERT`（`courses` や `enrollments`）も、つながりを失ってエラーになります。先に環境変数 `PGCLIENTENCODING` を `UTF8` にしてから、`01_schema.sql` → `02_seed.sql` の順に流し直してください（コマンドプロンプトは `set PGCLIENTENCODING=UTF8`、PowerShell は `$env:PGCLIENTENCODING = 'UTF8'`）。
+
+> [!WARNING]
 > `01_schema.sql` は、学習用に**テーブルを先に全部消してから作り直します**。すでに大事なデータが入っている `grades_db` には流さないでください。やり直したいときも、`01_schema.sql` → `02_seed.sql` の順に流し直せば、最初の状態に戻ります。
 
 ### パスワードの渡し方
@@ -153,6 +160,8 @@ step2 と step3 は、データベースのパスワードを**環境変数 `DB_
 | Windows PowerShell | `$env:DB_PASSWORD = 'あなたのパスワード'` |
 
 > パスワードを `.env` などのファイルに書く場合は、Git に入れないでください（`.gitignore` に `.env` を入れてあります）。
+
+設定していないと、step2 も step3 も、「環境変数 `DB_PASSWORD` が設定されていません」と表示して終了します。
 
 ## step2：PostgreSQL 版を動かす
 

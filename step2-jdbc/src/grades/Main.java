@@ -29,7 +29,12 @@ public class Main {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         dataSource.setUrl(System.getenv().getOrDefault("DB_URL", "jdbc:postgresql://localhost:5432/grades_db"));
         dataSource.setUser(System.getenv().getOrDefault("DB_USER", "postgres"));
-        dataSource.setPassword(System.getenv("DB_PASSWORD"));
+        String パスワード = System.getenv("DB_PASSWORD");
+        if (パスワード == null) {                             // 設定し忘れを、分かる言葉で知らせる（null のまま接続しない）
+            System.err.println("環境変数 DB_PASSWORD が設定されていません。README の「パスワードの渡し方」を見てください。");
+            return;
+        }
+        dataSource.setPassword(パスワード);
         JdbcClient jdbcClient = JdbcClient.create(dataSource);
 
         // 1. 保存先を決めて作る（new メモリ… から差し替え）

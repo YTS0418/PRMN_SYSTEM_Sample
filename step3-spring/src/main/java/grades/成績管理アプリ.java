@@ -8,6 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class 成績管理アプリ {
 
 	public static void main(String[] args) {
+		if (System.getenv("DB_PASSWORD") == null) {          // 設定し忘れを、起動のときに分かる言葉で知らせる
+			System.err.println("環境変数 DB_PASSWORD が設定されていません。README の「パスワードの渡し方」を見てください。");
+			return;
+		}
 		SpringApplication.run(成績管理アプリ.class, args);
 	}
 
