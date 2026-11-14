@@ -6,10 +6,10 @@ import grades.usecase.成績一覧;
 import grades.usecase.成績明細;
 import grades.domain.科目;
 import grades.usecase.学生を登録する;
-import grades.usecase.学生一覧を表示する;
+import grades.usecase.学生一覧を取得する;
 import grades.usecase.成績を登録する;
-import grades.usecase.成績一覧を表示する;
-import grades.usecase.科目一覧を表示する;
+import grades.usecase.成績一覧を取得する;
+import grades.usecase.科目一覧を取得する;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -23,21 +23,21 @@ public class コンソール画面 {
 
     private final 学生を登録する 学生を登録する;
     private final 成績を登録する 成績を登録する;
-    private final 成績一覧を表示する 成績一覧を表示する;
-    private final 学生一覧を表示する 学生一覧を表示する;
-    private final 科目一覧を表示する 科目一覧を表示する;
+    private final 成績一覧を取得する 成績一覧を取得する;
+    private final 学生一覧を取得する 学生一覧を取得する;
+    private final 科目一覧を取得する 科目一覧を取得する;
     private final Scanner 入力 = new Scanner(System.in);
 
     public コンソール画面(学生を登録する 学生を登録する,
                    成績を登録する 成績を登録する,
-                   成績一覧を表示する 成績一覧を表示する,
-                   学生一覧を表示する 学生一覧を表示する,
-                   科目一覧を表示する 科目一覧を表示する) {
+                   成績一覧を取得する 成績一覧を取得する,
+                   学生一覧を取得する 学生一覧を取得する,
+                   科目一覧を取得する 科目一覧を取得する) {
         this.学生を登録する = 学生を登録する;
         this.成績を登録する = 成績を登録する;
-        this.成績一覧を表示する = 成績一覧を表示する;
-        this.学生一覧を表示する = 学生一覧を表示する;
-        this.科目一覧を表示する = 科目一覧を表示する;
+        this.成績一覧を取得する = 成績一覧を取得する;
+        this.学生一覧を取得する = 学生一覧を取得する;
+        this.科目一覧を取得する = 科目一覧を取得する;
     }
 
     /** 入力が終わった（Ctrl+D など）ことを、メニューのループに伝える。 */
@@ -104,7 +104,7 @@ public class コンソール画面 {
     private void 成績一覧の画面() {
         学生一覧を出す();
         int 学生ID = Integer.parseInt(一行読む("学生 ID > "));
-        成績一覧 成績一覧 = 成績一覧を表示する.実行する(学生ID);
+        成績一覧 成績一覧 = 成績一覧を取得する.実行する(学生ID);
         System.out.println();
         System.out.println("【" + 成績一覧.氏名() + " さんの成績】");
         for (成績明細 明細 : 成績一覧.明細リスト()) {
@@ -127,14 +127,14 @@ public class コンソール画面 {
 
     private void 学生一覧を出す() {
         System.out.println("-- 学生 --");
-        for (学生 学生 : 学生一覧を表示する.実行する()) {
+        for (学生 学生 : 学生一覧を取得する.実行する()) {
             System.out.println("  " + 学生.学生ID() + ": " + 学生.氏名());
         }
     }
 
     private void 科目一覧を出す() {
         System.out.println("-- 科目 --");
-        for (科目 科目 : 科目一覧を表示する.実行する()) {
+        for (科目 科目 : 科目一覧を取得する.実行する()) {
             System.out.println("  " + 科目.科目ID() + ": " + 科目.科目名());
         }
     }

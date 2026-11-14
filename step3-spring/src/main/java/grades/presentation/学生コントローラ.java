@@ -6,7 +6,7 @@ import grades.usecase.成績一覧;
 import grades.usecase.成績明細;
 import grades.usecase.学生を登録する;
 import grades.usecase.成績を登録する;
-import grades.usecase.成績一覧を表示する;
+import grades.usecase.成績一覧を取得する;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,13 +33,13 @@ class 学生コントローラ {
 
     private final 学生を登録する 学生を登録する;
     private final 成績を登録する 成績を登録する;
-    private final 成績一覧を表示する 成績一覧を表示する;
+    private final 成績一覧を取得する 成績一覧を取得する;
 
     // コンストラクタ注入
-    学生コントローラ(学生を登録する 学生を登録する, 成績を登録する 成績を登録する, 成績一覧を表示する 成績一覧を表示する) {
+    学生コントローラ(学生を登録する 学生を登録する, 成績を登録する 成績を登録する, 成績一覧を取得する 成績一覧を取得する) {
         this.学生を登録する = 学生を登録する;
         this.成績を登録する = 成績を登録する;
-        this.成績一覧を表示する = 成績一覧を表示する;
+        this.成績一覧を取得する = 成績一覧を取得する;
     }
 
     @PostMapping                                                // POST /students
@@ -55,8 +55,8 @@ class 学生コントローラ {
     }
 
     @GetMapping("/{id}/transcript")                             // GET /students/1/transcript
-    成績一覧の応答 成績一覧を表示(@PathVariable("id") int 学生ID) {
-        成績一覧 成績一覧 = 成績一覧を表示する.実行する(学生ID);
+    成績一覧の応答 成績一覧を取得(@PathVariable("id") int 学生ID) {
+        成績一覧 成績一覧 = 成績一覧を取得する.実行する(学生ID);
         List<成績明細の応答> 明細リスト = new ArrayList<>();
         for (成績明細 明細 : 成績一覧.明細リスト()) {
             明細リスト.add(new 成績明細の応答(明細.科目名(), 明細.単位数(), 明細.年度(), 明細.点数(), 明細.合格()));

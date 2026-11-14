@@ -6,6 +6,8 @@ import grades.domain.科目リポジトリ;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.simple.JdbcClient;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +33,7 @@ public class Jdbc科目リポジトリ implements 科目リポジトリ {
         try {
             return jdbcClient.sql(sql)
                     .param("id", 科目ID)
-                    .query((rs, rowNum) -> new 科目(rs.getInt("course_id"), rs.getString("title"),
-                            rs.getInt("credits")))
+                    .query((rs, rowNum) -> 科目にする(rs))
                     .optional();
         } catch (DataAccessException e) {
             throw new 保存失敗例外("科目の取得に失敗しました", e);
@@ -48,11 +49,15 @@ public class Jdbc科目リポジトリ implements 科目リポジトリ {
                 """;
         try {
             return jdbcClient.sql(sql)
-                    .query((rs, rowNum) -> new 科目(rs.getInt("course_id"), rs.getString("title"),
-                            rs.getInt("credits")))
+                    .query((rs, rowNum) -> 科目にする(rs))
                     .list();
         } catch (DataAccessException e) {
             throw new 保存失敗例外("科目の取得に失敗しました", e);
         }
+    }
+
+    // 行（ResultSet）→ domain のオブジェクト。ResultSet は、この層から外に出さない
+    private static 科目 科目にする(ResultSet rs) throws SQLException {
+        return new 科目(rs.getInt("course_id"), rs.getString("title"), rs.getInt("credits"));
     }
 }

@@ -5,6 +5,8 @@ import grades.domain.科目リポジトリ;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,8 +32,7 @@ class Jdbc科目リポジトリ implements 科目リポジトリ {
                 """;
         return jdbcClient.sql(sql)
                 .param("id", 科目ID)
-                .query((rs, rowNum) -> new 科目(rs.getInt("course_id"), rs.getString("title"),
-                        rs.getInt("credits")))
+                .query((rs, rowNum) -> 科目にする(rs))
                 .optional();
     }
 
@@ -43,8 +44,12 @@ class Jdbc科目リポジトリ implements 科目リポジトリ {
                 ORDER BY course_id
                 """;
         return jdbcClient.sql(sql)
-                .query((rs, rowNum) -> new 科目(rs.getInt("course_id"), rs.getString("title"),
-                        rs.getInt("credits")))
+                .query((rs, rowNum) -> 科目にする(rs))
                 .list();
+    }
+
+    // 行（ResultSet）→ domain のオブジェクト。ResultSet は、この層から外に出さない
+    private static 科目 科目にする(ResultSet rs) throws SQLException {
+        return new 科目(rs.getInt("course_id"), rs.getString("title"), rs.getInt("credits"));
     }
 }

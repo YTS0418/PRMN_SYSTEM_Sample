@@ -7,13 +7,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/** ユースケース「学生一覧を表示する」（ビジネスロジック層）。画面で学生を選ぶときに使う。読み取りだけ。 */
+/** ユースケース「学生一覧を取得する」（ビジネスロジック層）。画面で学生を選ぶときに使う。読み取りだけ。 */
 @Service
-public class 学生一覧を表示する {
+public class 学生一覧を取得する {
 
     private final 学生リポジトリ 学生リポジトリ;
 
-    public 学生一覧を表示する(学生リポジトリ 学生リポジトリ) {
+    public 学生一覧を取得する(学生リポジトリ 学生リポジトリ) {
         this.学生リポジトリ = 学生リポジトリ;
     }
 

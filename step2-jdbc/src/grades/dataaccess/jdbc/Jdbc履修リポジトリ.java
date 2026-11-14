@@ -7,6 +7,8 @@ import grades.domain.履修一覧;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.simple.JdbcClient;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Types;
 import java.util.List;
 
@@ -55,13 +57,17 @@ public class Jdbc履修リポジトリ implements 履修リポジトリ {
         try {
             List<履修> 見つかった履修 = jdbcClient.sql(sql)
                     .param("studentId", 学生ID)
-                    .query((rs, rowNum) -> new 履修(
-                            rs.getInt("student_id"), rs.getInt("course_id"), rs.getInt("academic_year"),
-                            rs.getObject("score", Integer.class)))   // getInt だと NULL（履修中）が 0 点になる
+                    .query((rs, rowNum) -> 履修にする(rs))
                     .list();
             return new 履修一覧(見つかった履修);
         } catch (DataAccessException e) {
             throw new 保存失敗例外("履修の取得に失敗しました", e);
         }
+    }
+
+    // 行（ResultSet）→ domain のオブジェクト。ResultSet は、この層から外に出さない
+    private static 履修 履修にする(ResultSet rs) throws SQLException {
+        return new 履修(rs.getInt("student_id"), rs.getInt("course_id"), rs.getInt("academic_year"),
+                rs.getObject("score", Integer.class));   // getInt だと NULL（履修中）が 0 点になる
     }
 }
