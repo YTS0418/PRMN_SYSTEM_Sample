@@ -25,7 +25,7 @@
 
 共通の外枠（メニュー、上のバー）は `メインレイアウト` です。
 
-資料の画像を撮るための画面として、`部品見本ビュー`（`/demo/components`。教員だけ。メニューには出しません）もあります。FormLayout、入力コンポーネント、ボタン、確認ダイアログ、通知の見本です（フロントエンド編 04・05 章）。
+資料の画像を撮るための画面として、`部品見本ビュー`（`/demo/components`）と、`通知と確認の見本ビュー`（`/demo/feedback`。Notification の種類、ConfirmDialog、Dialog）もあります（どちらも教員だけ。メニューには出しません）。見本のコードの `// snippet: 名前` 〜 `// end snippet` の間は、資料に載せているコードと同じものです（Lecture の `check_snippets.py` で、一致を確かめます）。FormLayout、入力コンポーネント、ボタン、確認ダイアログ、通知の見本です（フロントエンド編 04・05 章）。
 
 ### 層との対応（`grades-vaadin/src/main/java/grades/`）
 
@@ -134,6 +134,7 @@ java -jar target/grades-vaadin-0.0.1-SNAPSHOT.jar
 | `spring-boot-starter-security` | ログイン・ロール |
 | `dev` profile（`vaadin-dev`） | **開発モードで必要**。`-Pproduction` を付けると、無効になる |
 | `production` profile | 画面用のファイルを最適化する（`build-frontend`） |
+| `@StyleSheet(Aura.STYLESHEET)`（起動クラス） | テーマの指定。**指定しないと、`Notification` の種類などの色が反映されない**（フロントエンド編 13 章） |
 
 > [!WARNING]
 > **このサンプルには、パスワードの再設定、ログイン失敗の回数制限、二要素認証がありません。** 学習用です。公開する場合は、フロントエンド編 12 章のチェックリストと、A3 を確認してください。

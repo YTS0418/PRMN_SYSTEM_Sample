@@ -1,14 +1,17 @@
 package grades;
 
+import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.page.AppShellConfigurator;
+import com.vaadin.flow.theme.aura.Aura;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Spring Boot の起動クラス。画面のテーマの指定も、ここに書く（フロントエンド編 13 章）。
- * テーマを指定しないときは、Vaadin の既定のテーマが使われる。指定する場合は、@StyleSheet(…) を付ける。
+ * テーマは、@StyleSheet で指定する。指定しないと、部品の種類（成功・エラーの色など）が、見た目に反映されない。
  */
 @SpringBootApplication
+@StyleSheet(Aura.STYLESHEET)                          // テーマを、明示的に指定する（フロントエンド編 13 章）
 public class 成績管理アプリ implements AppShellConfigurator {
 
 	public static void main(String[] args) {
