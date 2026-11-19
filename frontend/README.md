@@ -25,7 +25,23 @@
 
 共通の外枠（メニュー、上のバー）は `メインレイアウト` です。
 
-資料の画像を撮るための画面として、`部品見本ビュー`（`/demo/components`。教員だけ。メニューには出しません）もあります。FormLayout、入力コンポーネント、ボタン、確認ダイアログ、通知の見本です（フロントエンド編 04・05 章）。
+資料の画像を撮るための**見本の画面**もあります（教員だけ。メニューには出しません）。資料のコードを、そのまま動かした画面で、見本の `// snippet: 名前` 〜 `// end snippet` の間が、資料に載せているコードと同じものです（Lecture の `check_snippets.py` で、一致を確かめます）。
+
+| URL | 内容（フロントエンド編の章） |
+|---|---|
+| `/demo/layout` | レイアウト、余白、配置、FormLayout、Tabs、Details（04 章） |
+| `/demo/input` | TextField の各状態、TextArea、EmailField、NumberField、Checkbox、Select、ComboBox、RadioButtonGroup、CheckboxGroup など（05 章） |
+| `/demo/button` | ボタンの種類（05 章） |
+| `/demo/display` | 見出し、段落、アイコン、Avatar、ProgressBar（05 章） |
+| `/demo/feedback` | Notification の種類、ConfirmDialog、Dialog、ユースケースの例外の表示（05・09 章） |
+| `/demo/navigation` | RouterLink、SideNav（03 章） |
+| `/demo/events` | 値の変更のイベント（06 章） |
+| `/demo/grid` | Grid の列、並べ替え、部品の列、選択（07 章） |
+| `/demo/form` | Binder の入力チェックの表示（08 章） |
+| `/demo/login` | LoginForm の文言とエラー（10 章） |
+| `/demo/security` | 入力された文字の表示：Span と Html の違い（12 章） |
+| `/demo/theme` | CSS のクラス名、変数の上書き、ダークモード（13 章） |
+| `/demo/advanced` | Upload、Signals（A4） |
 
 ### 層との対応（`grades-vaadin/src/main/java/grades/`）
 
@@ -134,6 +150,7 @@ java -jar target/grades-vaadin-0.0.1-SNAPSHOT.jar
 | `spring-boot-starter-security` | ログイン・ロール |
 | `dev` profile（`vaadin-dev`） | **開発モードで必要**。`-Pproduction` を付けると、無効になる |
 | `production` profile | 画面用のファイルを最適化する（`build-frontend`） |
+| `@StyleSheet(Lumo.STYLESHEET)`（起動クラス） | テーマの指定。**指定しないと、`Notification` の種類などの色が反映されない**（フロントエンド編 13 章） |
 
 > [!WARNING]
 > **このサンプルには、パスワードの再設定、ログイン失敗の回数制限、二要素認証がありません。** 学習用です。公開する場合は、フロントエンド編 12 章のチェックリストと、A3 を確認してください。
