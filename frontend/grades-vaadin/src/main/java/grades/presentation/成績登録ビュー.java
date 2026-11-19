@@ -50,8 +50,7 @@ public class 成績登録ビュー extends VerticalLayout {
         年度.setValue(java.time.Year.now().getValue());
 
         点数.setHelperText("0〜100。履修中は、空欄のまま");
-        点数.setMin(0);                                         // 画面上の範囲（使いやすさのため）。本当の検査は Domain
-        点数.setMax(100);
+        // 範囲（0〜100）は、画面では制限しない。業務のルールの本体である Domain（履修）の検査に任せ、そのメッセージを表示する
 
         binder.forField(学生).asRequired("学生を選んでください").bind(成績登録フォーム::get学生, 成績登録フォーム::set学生);
         binder.forField(科目).asRequired("科目を選んでください").bind(成績登録フォーム::get科目, 成績登録フォーム::set科目);
