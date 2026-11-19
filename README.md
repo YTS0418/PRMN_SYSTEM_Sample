@@ -17,6 +17,7 @@
 | [`architecture/`](architecture/) | [4層アーキテクチャ編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/00_はじめに.md) | 4 層に分けた成績管理。メモリ版（`step1-memory/`）と Spring Boot 版（`step3-spring/`） | [architecture/README.md](architecture/README.md) |
 | [`upstream/`](upstream/) | [上流工程](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/上流工程/00_はじめに.md) | ユースケース記述と、コードから起こした確認用の文章 | [upstream/ユースケース記述.md](upstream/ユースケース記述.md) |
 | [`frontend/`](frontend/) | [フロントエンド編（Vaadin）](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/00_はじめに.md) | Vaadin 25 で作った画面、ログイン（DB 認証・ロール）、権限のテスト（`db/`、`grades-vaadin/`） | [frontend/README.md](frontend/README.md) |
+| [`docker/`](docker/) | [Docker / Compose 編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/00_はじめに.md) | PostgreSQL・pgAdmin・アプリを Docker Compose で動かす（`compose.yaml` など）。各アプリのフォルダには `Dockerfile` | [docker/README.md](docker/README.md) |
 
 ```mermaid
 flowchart LR

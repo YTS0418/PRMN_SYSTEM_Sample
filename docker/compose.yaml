@@ -1,0 +1,41 @@
+# DB（PostgreSQL）と pgAdmin を起動する Compose ファイル
+# 対応する資料：Docker 編 04 章
+#   cp .env.example .env        ← 先に .env を作って、パスワードを入れる
+#   docker compose up -d
+# 初期データは、初回起動のときだけ、../database/db の SQL から入る（Docker 編 04 章 4 節）。
+# 入れ直すときは  docker compose down -v  でボリューム（データ）を消してから up する。
+
+services:
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_DB: grades_db
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?.env に POSTGRES_PASSWORD を設定してください}
+    ports:
+      # 127.0.0.1 を付けて、このパソコンからだけ接続できるようにする
+      - "127.0.0.1:5432:5432"
+    volumes:
+      # PostgreSQL 18 のイメージは /var/lib/postgresql に取り付ける（17 以前は /var/lib/postgresql/data）
+      - pgdata:/var/lib/postgresql
+      # 初回起動のときだけ、ファイル名の順に実行される
+      - ../database/db/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ../database/db/02_seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d grades_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:?.env に PGADMIN_PASSWORD を設定してください}
+    ports:
+      - "127.0.0.1:5050:80"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
