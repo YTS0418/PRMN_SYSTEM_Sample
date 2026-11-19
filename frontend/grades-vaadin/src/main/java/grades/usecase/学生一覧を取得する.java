@@ -1,0 +1,26 @@
+package grades.usecase;
+
+import grades.domain.学生;
+import grades.domain.学生リポジトリ;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+/** ユースケース「学生一覧を取得する」（ビジネスロジック層）。画面で学生を選ぶときに使う。読み取りだけ。 */
+@Service
+public class 学生一覧を取得する {
+
+    private final 学生リポジトリ 学生リポジトリ;
+
+    public 学生一覧を取得する(学生リポジトリ 学生リポジトリ) {
+        this.学生リポジトリ = 学生リポジトリ;
+    }
+
+    @PreAuthorize("hasRole('TEACHER')")                       // 教員だけ（権限の確認はユースケースで行う。フロントエンド編 12 章）
+    @Transactional(readOnly = true)                           // 読み取りだけのトランザクション
+    public List<学生> 実行する() {
+        return 学生リポジトリ.すべて探す();
+    }
+}
