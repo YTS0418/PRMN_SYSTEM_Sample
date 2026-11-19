@@ -33,7 +33,7 @@
 | `/demo/input` | TextField の各状態、TextArea、EmailField、NumberField、Checkbox、Select、ComboBox、RadioButtonGroup、CheckboxGroup など（05 章） |
 | `/demo/button` | ボタンの種類（05 章） |
 | `/demo/display` | 見出し、段落、アイコン、Avatar、ProgressBar（05 章） |
-| `/demo/feedback` | Notification の種類、ConfirmDialog、Dialog（05 章） |
+| `/demo/feedback` | Notification の種類、ConfirmDialog、Dialog、ユースケースの例外の表示（05・09 章） |
 | `/demo/navigation` | RouterLink、SideNav（03 章） |
 | `/demo/events` | 値の変更のイベント（06 章） |
 | `/demo/grid` | Grid の列、並べ替え、部品の列、選択（07 章） |
@@ -41,6 +41,7 @@
 | `/demo/login` | LoginForm の文言とエラー（10 章） |
 | `/demo/security` | 入力された文字の表示：Span と Html の違い（12 章） |
 | `/demo/theme` | CSS のクラス名、変数の上書き、ダークモード（13 章） |
+| `/demo/advanced` | Upload、Signals（A4） |
 
 ### 層との対応（`grades-vaadin/src/main/java/grades/`）
 

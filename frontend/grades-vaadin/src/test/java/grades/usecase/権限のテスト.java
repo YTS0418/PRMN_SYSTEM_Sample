@@ -88,8 +88,10 @@ class 権限のテスト {
 
     @Test
     void 学生は他の学生の成績を見られない() {
-        ログインする("STUDENT", 1);
-        assertThrows(AccessDeniedException.class, () -> 成績一覧を取得する.実行する(2));
+        // snippet: test-idor
+        ログインする("STUDENT", 1);                                           // 学生番号 1 の学生として、ログインする
+        assertThrows(AccessDeniedException.class, () -> 成績一覧を取得する.実行する(2));   // 学生番号 2 の成績は、見られない
+        // end snippet
     }
 
     @Test

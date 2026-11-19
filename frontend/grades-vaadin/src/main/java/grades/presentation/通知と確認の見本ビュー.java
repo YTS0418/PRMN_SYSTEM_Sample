@@ -11,6 +11,7 @@ import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.router.PageTitle;
+import grades.domain.学生;
 import com.vaadin.flow.router.Route;
 import jakarta.annotation.security.RolesAllowed;
 
@@ -98,6 +99,30 @@ public class 通知と確認の見本ビュー extends VerticalLayout {
                     確認.setConfirmText("削除する");
                     確認.setConfirmButtonTheme("error primary");
                     確認.open();
+                    // end snippet
+                })));
+
+        add(new H3("ユースケースの例外の表示（フロントエンド編 09 章）"));
+        add(行(
+                ボタン("例外の表示（成功）", e0 -> {
+                    // snippet: usecase-success
+                    var 学生 = new 学生(7, "千歳 花子", 1, 2026);            // ユースケースが返した学生
+                    Notification.show("登録しました：" + 学生.氏名())
+                            .addThemeVariants(NotificationVariant.SUCCESS);
+                    // end snippet
+                }),
+                ボタン("例外の表示（Domain）", e0 -> {
+                    // snippet: usecase-domain-error
+                    var e = new IllegalArgumentException("点数は0〜100にしてください: 150");   // Domain が投げた例外
+                    Notification.show(e.getMessage(), 5000, Notification.Position.MIDDLE)
+                            .addThemeVariants(NotificationVariant.ERROR);
+                    // end snippet
+                }),
+                ボタン("例外の表示（見つからない）", e0 -> {
+                    // snippet: usecase-not-found
+                    var e = new java.util.NoSuchElementException("学生が見つかりません: 999");   // ユースケースが投げた例外
+                    Notification.show("対象が見つかりません。画面を更新してください。")
+                            .addThemeVariants(NotificationVariant.WARNING);
                     // end snippet
                 })));
 
