@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @StyleSheet(Lumo.STYLESHEET)                          // テーマを、明示的に指定する（フロントエンド編 13 章）
+@StyleSheet("styles.css")                             // 自分の CSS（テーマの後に書く）
 public class 成績管理アプリ implements AppShellConfigurator {
 
 	public static void main(String[] args) {

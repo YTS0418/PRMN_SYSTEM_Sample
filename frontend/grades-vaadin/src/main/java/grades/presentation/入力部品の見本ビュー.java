@@ -1,16 +1,21 @@
 package grades.presentation;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.component.combobox.ComboBox;
+import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.component.select.Select;
+import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.IntegerField;
+import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.PasswordField;
+import com.vaadin.flow.component.textfield.TextArea;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -40,6 +45,11 @@ public class 入力部品の見本ビュー extends VerticalLayout {
                 見本("input-text-error", テキスト_エラー()),
                 見本("input-text-readonly", テキスト_読み取り専用()),
                 見本("input-text-disabled", テキスト_無効()),
+                見本("input-text-area", テキストエリア()),
+                見本("input-email", メール()),
+                見本("input-number", 小数()),
+                見本("input-checkbox", チェックボックス()),
+                見本("input-multi-combo", 複数コンボ()),
                 見本("input-integer", 整数()),
                 見本("input-password", パスワード()),
                 見本("input-date", 日付()),
@@ -178,5 +188,49 @@ public class 入力部品の見本ビュー extends VerticalLayout {
         列.select("科目名", "点数");
         // end snippet
         return 列;
+    }
+
+    private Component テキストエリア() {
+        // snippet: input-text-area
+        var 備考 = new TextArea("備考");
+        備考.setValue("遠隔授業で受講。\n課題は、期限内に提出済み。");
+        備考.setMinHeight("120px");
+        // end snippet
+        return 備考;
+    }
+
+    private Component メール() {
+        // snippet: input-email
+        var 連絡先 = new EmailField("連絡先のメールアドレス");
+        連絡先.setValue("taro@example.com");
+        // end snippet
+        return 連絡先;
+    }
+
+    private Component 小数() {
+        // snippet: input-number
+        var 平均点 = new NumberField("平均点");
+        平均点.setValue(91.5);
+        平均点.setReadOnly(true);
+        // end snippet
+        return 平均点;
+    }
+
+    private Component チェックボックス() {
+        // snippet: input-checkbox
+        var 履修中 = new Checkbox("履修中として登録する");
+        履修中.setValue(true);
+        // end snippet
+        return 履修中;
+    }
+
+    private Component 複数コンボ() {
+        // snippet: input-multi-combo
+        var 科目 = new MultiSelectComboBox<String>("科目（複数）");
+        科目.setItems("プログラミング基礎", "データベース", "線形代数");
+        科目.setWidth("360px");
+        科目.select("プログラミング基礎", "データベース");
+        // end snippet
+        return 科目;
     }
 }

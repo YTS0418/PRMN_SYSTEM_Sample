@@ -1,0 +1,5 @@
+/* 自分の CSS（フロントエンド編 13 章）。テーマの後に読み込む */
+.grade-failed {
+    color: var(--lumo-error-text-color);     /* 色は、直接書かず、テーマの変数を使う */
+    font-weight: 600;
+}

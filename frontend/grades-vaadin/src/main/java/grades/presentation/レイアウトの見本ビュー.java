@@ -1,6 +1,7 @@
 package grades.presentation;
 
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Span;
@@ -8,6 +9,8 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.tabs.Tab;
+import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -40,6 +43,8 @@ public class レイアウトの見本ビュー extends VerticalLayout {
                 見本("layout-align-center", 縦方向の中央()),
                 見本("layout-expand", 余りを使わせる()),
                 見本("layout-wrap", 折り返す()),
+                見本("layout-tabs", タブ()),
+                見本("layout-details", 折りたたみ()),
                 見本("layout-form-wide", フォーム(600)),
                 見本("layout-form-narrow", フォーム(300)));
         add(並び);
@@ -127,5 +132,20 @@ public class レイアウトの見本ビュー extends VerticalLayout {
         // end snippet
         フォーム.setWidth(幅 + "px");
         return 枠線(フォーム);
+    }
+
+    private Component タブ() {
+        // snippet: layout-tabs
+        var タブ = new Tabs(new Tab("成績"), new Tab("履修"), new Tab("基本情報"));
+        // end snippet
+        return タブ;
+    }
+
+    private Component 折りたたみ() {
+        // snippet: layout-details
+        var 詳細 = new Details("詳細な条件", new Span("2024 年度以降に入学した学生だけを対象にします。"));
+        詳細.setOpened(true);
+        // end snippet
+        return 詳細;
     }
 }
