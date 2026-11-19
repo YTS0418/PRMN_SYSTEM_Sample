@@ -16,14 +16,14 @@
 | [`database/`](database/) | [データベース編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/00_はじめに.md) | テーブル定義とサンプルデータ（`db/`）、JdbcClient で PostgreSQL に保存する Java（`step2-jdbc/`） | [database/README.md](database/README.md) |
 | [`architecture/`](architecture/) | [4層アーキテクチャ編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/00_はじめに.md) | 4 層に分けた成績管理。メモリ版（`step1-memory/`）と Spring Boot 版（`step3-spring/`） | [architecture/README.md](architecture/README.md) |
 | [`upstream/`](upstream/) | [上流工程](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/上流工程/00_はじめに.md) | ユースケース記述と、コードから起こした確認用の文章 | [upstream/ユースケース記述.md](upstream/ユースケース記述.md) |
-| [`frontend/`](frontend/) | [フロントエンド編（Vaadin）](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/00_はじめに.md) | Vaadin で作った画面（作成予定） | [frontend/README.md](frontend/README.md) |
+| [`frontend/`](frontend/) | [フロントエンド編（Vaadin）](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/00_はじめに.md) | Vaadin 25 で作った画面、ログイン（DB 認証・ロール）、権限のテスト（`db/`、`grades-vaadin/`） | [frontend/README.md](frontend/README.md) |
 
 ```mermaid
 flowchart LR
     db["database/<br>PostgreSQL・JDBC"]
     arch["architecture/<br>step1（メモリ）<br>step3（Spring Boot）"]
     up["upstream/<br>ユースケース記述"]
-    fe["frontend/<br>Vaadin（作成予定）"]
+    fe["frontend/<br>Vaadin・ログイン"]
     up -.->|"元になる"| arch
     up -.->|"元になる"| fe
 ```

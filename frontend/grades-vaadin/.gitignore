@@ -1,0 +1,10 @@
+# Vaadin が、起動・ビルドのときに自動で作るファイル（Git で管理しない。フロントエンド編 02 章 4 節）
+src/main/frontend/generated/
+node_modules/
+package.json
+package-lock.json
+vite.config.ts
+vite.generated.ts
+tsconfig.json
+types.d.ts
+.vaadin/
