@@ -1,0 +1,17 @@
+target/
+.git/
+.idea/
+.vscode/
+*.iml
+.env
+*.md
+# Vaadin が自動で作るファイル（ビルドで作り直す）
+node_modules/
+src/main/frontend/generated/
+.vaadin/
+package.json
+package-lock.json
+vite.config.ts
+vite.generated.ts
+tsconfig.json
+types.d.ts

@@ -1,0 +1,27 @@
+# アプリを Vaadin 版（frontend/grades-vaadin）にする Compose ファイル
+# 対応する資料：Docker 編 05 章 7 節、フロントエンド編
+# compose.yaml に重ねて使う（compose.app.yaml とは一緒に使わない）：
+#   docker compose -f compose.yaml -f compose.vaadin.yaml up -d --build
+#   ブラウザで http://localhost:8080 を開く（ログインできるユーザーは frontend/README.md）
+#
+# Vaadin 版は、ログイン用の users テーブルが要るので、初期データの SQL を frontend/db のものに差し替える。
+# 同じ取り付け先（コンテナ側のパス）を書くと、compose.yaml の設定が上書きされる。
+# すでに compose.yaml で起動したことがあるときは、先に  docker compose down -v  でデータを消す。
+
+services:
+  db:
+    volumes:
+      - ../frontend/db/01_schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ../frontend/db/02_seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
+
+  app:
+    build: ../frontend/grades-vaadin
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/grades_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:?.env に POSTGRES_PASSWORD を設定してください}
+    ports:
+      - "127.0.0.1:8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
