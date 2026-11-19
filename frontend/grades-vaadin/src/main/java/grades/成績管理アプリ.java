@@ -2,7 +2,7 @@ package grades;
 
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.page.AppShellConfigurator;
-import com.vaadin.flow.theme.aura.Aura;
+import com.vaadin.flow.theme.lumo.Lumo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -11,7 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * テーマは、@StyleSheet で指定する。指定しないと、部品の種類（成功・エラーの色など）が、見た目に反映されない。
  */
 @SpringBootApplication
-@StyleSheet(Aura.STYLESHEET)                          // テーマを、明示的に指定する（フロントエンド編 13 章）
+@StyleSheet(Lumo.STYLESHEET)                          // テーマを、明示的に指定する（フロントエンド編 13 章）
 public class 成績管理アプリ implements AppShellConfigurator {
 
 	public static void main(String[] args) {
