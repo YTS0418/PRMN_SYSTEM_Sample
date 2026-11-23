@@ -1,0 +1,15 @@
+' Compose ファイルの重ね方（docker/README.md）：compose.yaml に、アプリの設定を重ねる
+@startuml compose-files
+!include ../_common.iuml
+hide stereotype
+top to bottom direction
+rectangle ".env\n（パスワードなど。Git に載せない）" as env #fadbd8
+rectangle "compose.yaml\ndb と pgadmin" as base #fff3cd
+rectangle "compose.app.yaml\napp：step3-spring（Web API）" as app #d5f5e3
+rectangle "compose.vaadin.yaml\napp：grades-vaadin（Vaadin）" as vaadin #d5f5e3
+env -right-> base : 値を渡す
+app -up-> base : 重ねる（-f を 2 つ）
+vaadin -up-> base : 重ねる（-f を 2 つ）
+app -[hidden]right- vaadin
+note bottom of app : どちらか一方だけを使う\n（同じ 8080 番ポートを使うため）
+@enduml

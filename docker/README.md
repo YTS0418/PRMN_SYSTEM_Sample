@@ -21,6 +21,10 @@
 | [`../architecture/step3-spring/Dockerfile`](../architecture/step3-spring/Dockerfile) | `step3-spring` のイメージの作り方（マルチステージ） | Docker 編 [05 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/05_Dockerfileとイメージ作成.md) |
 | [`../frontend/grades-vaadin/Dockerfile`](../frontend/grades-vaadin/Dockerfile) | `grades-vaadin` のイメージの作り方（`-Pproduction`） | Docker 編 [05 章 7 節](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/05_Dockerfileとイメージ作成.md) |
 
+<img src="../docs/images/docker/compose-services.svg" alt="Compose で動くサービスの図。ブラウザは localhost:5050 で pgadmin に、localhost:8080 で app に、psql や IDE は localhost:5432 で db につなぐ。pgadmin と app は、Compose のネットワークの中で、db という名前で db につなぐ" width="760">
+
+<img src="../docs/images/docker/compose-files.svg" alt="Compose ファイルの重ね方。compose.yaml（db と pgadmin）に、compose.app.yaml か compose.vaadin.yaml のどちらか一方を重ねる。.env が値を渡す" width="560">
+
 ## 準備
 
 | 必要なもの | 備考 |
@@ -99,6 +103,16 @@ docker compose -f compose.yaml -f compose.vaadin.yaml up -d --build
 
 ## 止める・やり直す
 
+```mermaid
+flowchart LR
+    S(["起動中"]) -->|"stop"| P["止まった<br>（コンテナもデータも残る）"]
+    P -->|"start / up -d"| S
+    S -->|"down"| R["コンテナを消した<br>（データは残る）"]
+    R -->|"up -d"| S
+    S -->|"down -v"| Z["データも消した<br>（最初の状態）"]
+    Z -->|"up -d"| S
+```
+
 コマンドの意味は、[Docker 編 03 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/03_Dockerの基本操作.md)と[04 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/04_Docker_Compose入門.md)にあります。
 
 | やりたいこと | コマンド |
@@ -111,6 +125,9 @@ docker compose -f compose.yaml -f compose.vaadin.yaml up -d --build
 
 > [!WARNING]
 > `down -v` は、DB のデータを**すべて消します**。
+
+> [!TIP]
+> 迷ったら、`docker compose down -v` で全部消して、`up -d` からやり直すと、最初の状態に戻ります（学習用のデータなので、安心して試せます）。
 
 ## よくあるミス
 

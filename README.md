@@ -7,6 +7,10 @@
 > [!TIP]
 > 資料では考え方（なぜ・何を・どこに）を説明し、このリポジトリでは**どう書くか**を確認します。資料を読みながら、このリポジトリのコードを IDE で開いておくのがおすすめです。
 
+<img src="docs/images/frontend/students.png" alt="frontend/ で動く、成績管理システムの学生一覧の画面（教員でログインした画面）" width="560">
+
+*`frontend/` で動く、完成した画面の例です。*
+
 ## 目次
 
 資料ごとにフォルダを分けてあり、**各フォルダは、それだけで動かせます**（必要な SQL なども、フォルダの中に入っています）。動かし方は、各フォルダの `README.md` にあります。
@@ -25,8 +29,12 @@ flowchart LR
     arch["architecture/<br>step1（メモリ）<br>step3（Spring Boot）"]
     up["upstream/<br>ユースケース記述"]
     fe["frontend/<br>Vaadin・ログイン"]
+    dk["docker/<br>Compose・Dockerfile"]
     up -.->|"元になる"| arch
     up -.->|"元になる"| fe
+    dk -.->|"DB を動かす"| db
+    dk -.->|"アプリを動かす"| arch
+    dk -.->|"アプリを動かす"| fe
 ```
 
 > [!NOTE]
@@ -47,6 +55,8 @@ flowchart LR
 ### 層と資料の呼び名
 
 資料（[4層アーキテクチャ編 02 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/02_4層の役割.md)）とは、層の呼び名とパッケージ名が次のように対応します。
+
+<img src="docs/images/architecture/dia-00-01-layers-map.svg" alt="4 層の関係。Presentation から Application、Domain へ進み、Infrastructure は Domain のインタフェースを実装して DB につながる" width="640">
 
 | このサンプル（ガイドライン） | パッケージ | 資料での呼び名 | 役割 |
 |---|---|---|---|

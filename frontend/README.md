@@ -7,12 +7,23 @@
 > [!NOTE]
 > コード・層の呼び名・日本語の名前の決まりは、[ルートの README](../README.md#コードの書き方の決まり) にあります。
 
+## 完成すると、こうなります
+
+| ログイン | 学生一覧（教員） | 成績一覧 |
+|---|---|---|
+| <img src="../docs/images/frontend/login.png" alt="ログイン画面。ユーザー名、パスワード、ログインのボタン" width="260"> | <img src="../docs/images/frontend/students.png" alt="教員の学生一覧の画面。学生番号、氏名、所属学科、入学年度の表" width="260"> | <img src="../docs/images/frontend/transcript.png" alt="成績一覧の画面。科目ごとの点数と合否、履修中の行、平均点" width="260"> |
+
+> [!NOTE]
+> 画像の赤枠と番号は、[フロントエンド編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/00_はじめに.md)の説明に使っている印です（資料と同じ画像を使っています）。
+
 ## 構成
 
 | フォルダ | 内容 | 対応する資料 |
 |---|---|---|
 | [`db/`](db/) | テーブル定義とサンプルデータ。**`users` テーブル**（ログイン用）を含む | [データベース編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/00_はじめに.md)、フロントエンド編 [11 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/11_DB認証とロール.md) |
 | [`grades-vaadin/`](grades-vaadin/) | Vaadin（Spring Boot）のアプリ | [フロントエンド編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/00_はじめに.md) |
+
+<img src="../docs/images/frontend/dia-11-01-users-er.svg" alt="users テーブル（ログイン用）と、学生・履修のテーブルの関係を表す図" width="540">
 
 ### 画面（ビュー）とアクセスできる人
 
@@ -24,6 +35,10 @@
 | 学生の登録 | `/students/register` | `学生登録ビュー` | 教員 |
 | 成績の登録 | `/enrollments/register` | `成績登録ビュー` | 教員 |
 | 成績一覧 | `/students/{学生番号}/transcript` | `成績一覧ビュー` | 教員、**本人の学生だけ**（ユースケースで確認） |
+
+| 学生の登録（教員） | 成績の登録（点数が範囲外のとき） |
+|---|---|
+| <img src="../docs/images/frontend/register.png" alt="学生の登録画面。氏名、学科、入学年度を入力する" width="330"> | <img src="../docs/images/frontend/enrollment-error.png" alt="成績の登録画面。点数に 150 を入れると、点数は 0〜100 にしてください、という通知が出る" width="330"> |
 
 共通の外枠（メニュー、上のバー）は `メインレイアウト` です（[04 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/04_レイアウト.md)）。ビューとルーティングは [03 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/03_ビューとルーティング.md)、ログインは [10 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/10_ログインの基本.md)・[11 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/11_DB認証とロール.md)にあります。
 
@@ -111,12 +126,17 @@ cd grades-vaadin
 | `student01` | `grades-sample` | 学生（`STUDENT`、学生番号 1） | **自分の成績一覧だけ** |
 | `student02` | `grades-sample` | 学生（`STUDENT`、学生番号 2） | **自分の成績一覧だけ** |
 
-`db/02_seed.sql` には、パスワードを **BCrypt でハッシュ化した値**だけを保存しています。
+`db/02_seed.sql` には、パスワードを **BCrypt でハッシュ化した値**だけを保存しています。ログインの流れは、次の図のとおりです。
+
+<img src="../docs/images/frontend/dia-10-01-login-flow.svg" alt="ログインの流れ。ブラウザがユーザー名とパスワードを送り、サーバーが users テーブルのハッシュと照合して、ロールを決める" width="640">
 
 > [!CAUTION]
 > これは、学習用の**仮のユーザーとパスワード**です。公開するアプリには、絶対に持ち込まないでください（[フロントエンド編 A2](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/A2_本番ビルドとデプロイ.md)）。
 
 ### 確かめてみよう（権限）
+
+> [!TIP]
+> まず `teacher01` でログインして、学生一覧を見てから、ログアウトして `student01` でログインし直してみましょう。**同じアドレスでも、見られる画面が変わる**ことが分かります。
 
 - `teacher01` で、学生一覧 → 行を選ぶと、成績一覧が見られる
 - `student01` でログインして、アドレスを `/students/2/transcript` に変えても、「**この成績は表示できません**」と出る（**ユースケースが拒否**する。[フロントエンド編 12 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/12_Webアプリの脅威と対策.md)）
@@ -124,6 +144,10 @@ cd grades-vaadin
 - 学生を登録するときの入学年度を、1999 にすると、画面の入力チェックが、エラーを表示する
 - 成績の登録で、点数に `150` を入れると、**Domain の検査**（`履修`）が、「点数は0〜100にしてください」を通知に出す。この画面は、点数の範囲を、画面では制限していない（業務のルールの本体は Domain。フロントエンド編 [08](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/08_フォームとBinder.md)・[09 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/09_4層とつなぐ.md)）
 - 間違ったパスワードでは、「ユーザー名またはパスワードが違います」と出る（どちらが違うかは、教えない）
+
+| 権限のない画面を開いたとき | ログインに失敗したとき |
+|---|---|
+| <img src="../docs/images/frontend/access-denied.png" alt="student01 で、教員だけの画面を開くと、Could not navigate と表示される" width="330"> | <img src="../docs/images/frontend/login-error.png" alt="間違ったパスワードで、ユーザー名またはパスワードが違います、と表示される" width="200"> |
 
 ## テスト
 

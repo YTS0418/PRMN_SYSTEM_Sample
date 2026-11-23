@@ -1,0 +1,19 @@
+# Lecture（PRMN_SYSTEM_Lecture）の images/ からコピーした画像の一覧。左：このリポジトリのパス、右：Lecture の images/ の下のパス
+# 確認：bash tools/check-lecture-images.sh
+docs/images/frontend/students.png	frontend/app/screens/students.png
+docs/images/frontend/register.png	frontend/app/screens/register.png
+docs/images/frontend/transcript.png	frontend/app/screens/transcript.png
+docs/images/frontend/login.png	frontend/app/screens/login.png
+docs/images/frontend/login-error.png	frontend/app/screens/login-error.png
+docs/images/frontend/access-denied.png	frontend/app/screens/access-denied.png
+docs/images/frontend/enrollment-error.png	frontend/app/screens/enrollment-error.png
+docs/images/frontend/dia-10-01-login-flow.svg	frontend/diagram/dia-10-01-login-flow.svg
+docs/images/frontend/dia-11-01-users-er.svg	frontend/diagram/dia-11-01-users-er.svg
+docs/images/database/er-04-01-logical.svg	database/diagram/er-04-01-logical.svg
+docs/images/database/cls-12-01-jdbc-repository.svg	database/diagram/cls-12-01-jdbc-repository.svg
+docs/images/architecture/dia-00-01-layers-map.svg	architecture/diagram/dia-00-01-layers-map.svg
+docs/images/architecture/dia-02-01-four-layers.svg	architecture/diagram/dia-02-01-four-layers.svg
+docs/images/architecture/dia-03-02-interface-before-after.svg	architecture/diagram/dia-03-02-interface-before-after.svg
+docs/images/architecture/dia-06-01-sample-structure.svg	architecture/diagram/dia-06-01-sample-structure.svg
+docs/images/upstream/arch-00-01-grades-model.svg	architecture/diagram/arch-00-01-grades-model.svg
+docs/images/_common.iuml	frontend/diagram/_common.iuml
