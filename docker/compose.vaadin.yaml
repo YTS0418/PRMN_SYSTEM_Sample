@@ -19,7 +19,8 @@ services:
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/grades_db
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:?.env に POSTGRES_PASSWORD を設定してください}
+      # アプリは DB_PASSWORD を読む（application.properties の ${DB_PASSWORD}。起動時にも確認する）
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?.env に POSTGRES_PASSWORD を設定してください}
     ports:
       - "127.0.0.1:8080:8080"
     depends_on:

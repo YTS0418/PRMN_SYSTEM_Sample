@@ -3,7 +3,7 @@
 資料：[Docker / Compose 編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/00_はじめに.md)。PostgreSQL と pgAdmin、そしてアプリを、Docker Compose で動かす例です。
 
 > [!WARNING]
-> **動作確認は、まだ行っていません。** 資料と同じく、手順や設定が合わないところがあれば、教えてください。
+> **動作確認は、Windows（PowerShell）で行いました**（レビューでの確認）。macOS や Linux では、まだ確かめていません。手順や設定が合わないところがあれば、教えてください。
 
 > [!NOTE]
 > このフォルダは、**ほかのフォルダのファイルを参照します**（アプリは `architecture/step3-spring/` や `frontend/grades-vaadin/`、初期データの SQL は `database/db/` や `frontend/db/`）。ほかのフォルダは、そのままにして、このフォルダだけを持ち出しても動きません。
@@ -42,6 +42,7 @@ cp .env.example .env          # Windows の PowerShell では  Copy-Item .env.ex
 |---|---|
 | `POSTGRES_PASSWORD` | DB の `postgres` ユーザーのパスワード |
 | `PGADMIN_PASSWORD` | pgAdmin にログインするパスワード |
+| `DB_PORT` | パソコン側の DB のポート番号。空なら `5432`。5432 が使用中なら `5433` など（[よくあるミス](#よくあるミス)） |
 
 > [!CAUTION]
 > パスワードは、自分で決めた、推測されにくいものにします。**`.env.example` に、実際の値を書かないでください**。ポートは、すべて `127.0.0.1`（このパソコンだけ）に公開しています。外に公開しないでください。
@@ -55,12 +56,12 @@ docker compose ps             # db が healthy になるまで待つ
 
 | つなぐもの | 接続先 |
 |---|---|
-| psql など（このパソコンから） | `localhost:5432`、データベース `grades_db`、ユーザー `postgres` |
+| psql など（このパソコンから） | `localhost:5432`（`DB_PORT` を変えたときは、その番号）、データベース `grades_db`、ユーザー `postgres` |
 | pgAdmin（ブラウザ） | <http://localhost:5050>（メールアドレス `admin@example.com`、パスワードは `PGADMIN_PASSWORD`） |
 
 pgAdmin でサーバーを登録するとき、Host name/address は **`db`** にします（`localhost` ではありません。Docker 編 04 章 5 節）。
 
-アプリを IDE で動かすなら、これだけで足ります（接続先は `localhost:5432` のまま。環境変数 `DB_PASSWORD` に、`POSTGRES_PASSWORD` と同じ値を設定します）。
+アプリを IDE で動かすなら、これだけで足ります（接続先は `localhost:5432` のまま。`DB_PORT` を変えたときは、環境変数 `SPRING_DATASOURCE_URL` に `jdbc:postgresql://localhost:5433/grades_db` のように設定します。環境変数 `DB_PASSWORD` に、`POSTGRES_PASSWORD` と同じ値を設定します）。
 
 ## 2. アプリも Compose で動かす
 
@@ -68,9 +69,18 @@ pgAdmin でサーバーを登録するとき、Host name/address は **`db`** �
 
 ```bash
 docker compose -f compose.yaml -f compose.app.yaml up -d --build
-docker compose logs -f app    # Started GradesApplication と出れば成功（Ctrl+C で抜ける）
-curl http://localhost:8080/students
+docker compose -f compose.yaml -f compose.app.yaml logs -f app    # Started GradesApplication と出れば成功（Ctrl+C で抜ける）
+curl http://localhost:8080/students/1/transcript
 ```
+
+`ps`、`logs`、`down` にも、**起動したときと同じ `-f` が必要**です（付けないと `no such service: app` になります）。毎回打つのが面倒なら、`.env` に `COMPOSE_FILE=compose.yaml:compose.app.yaml` と書きます（Windows では区切りが `;` です）。
+
+> [!NOTE]
+> **Windows の PowerShell では、`curl.exe` と打ちます**（`curl` は `Invoke-WebRequest` の別名で、日本語が文字化けします）。このアプリに `GET /students` はないので、`/students` だけだと `405` になります。
+>
+> ```powershell
+> curl.exe http://localhost:8080/students/1/transcript
+> ```
 
 ### grades-vaadin（Vaadin）
 
@@ -101,7 +111,11 @@ docker compose -f compose.yaml -f compose.vaadin.yaml up -d --build
 | ミス | 原因・対処 |
 |---|---|
 | `.env に POSTGRES_PASSWORD を設定してください` と出る | `.env` が無い、または値が空。`.env.example` から作って、値を入れる |
-| 5432 番ポートが使用中 | このパソコンに入れた PostgreSQL が動いている。停止するか、`compose.yaml` の `127.0.0.1:5432:5432` を `127.0.0.1:5433:5432` に変える |
+| 5432 番ポートが使用中（`port is already allocated`） | このパソコンに入れた PostgreSQL が動いている。停止するか、`.env` に `DB_PORT=5433` と書いて、`docker compose up -d` をやり直す。psql などは `5433` 番に、IDE のアプリは `SPRING_DATASOURCE_URL` で `localhost:5433` につなぐ |
+| `no such service: app` | `-f compose.yaml -f compose.app.yaml` を付け忘れた（`ps`・`logs`・`down` にも必要） |
+| `環境変数 DB_PASSWORD が設定されていません`（`app` のログ） | 古い `compose.app.yaml` / `compose.vaadin.yaml` を使っている。`DB_PASSWORD: ${POSTGRES_PASSWORD...}` を渡す設定に更新する（アプリは `SPRING_DATASOURCE_PASSWORD` ではなく `DB_PASSWORD` を確認する） |
+| `405 Method Not Allowed` | URL が違う。`/students` ではなく `/students/1/transcript` を使う |
+| PowerShell で、日本語が文字化けする | `curl` ではなく `curl.exe` を使う |
 | 8080 番ポートが使用中 | IDE で動かしたアプリが、まだ動いている。停止する |
 | `password authentication failed` | `.env` のパスワードを、DB の**作成後**に変えた。ボリュームは、最初のパスワードで作られているので、`down -v` で作り直す |
 | `localhost` のまま接続して失敗する（アプリのログ） | コンテナの中の `localhost` は、そのコンテナ自身。環境変数 `SPRING_DATASOURCE_URL` で、`db` を指しているか確認する |
