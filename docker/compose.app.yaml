@@ -2,7 +2,7 @@
 # 対応する資料：Docker 編 06 章
 # compose.yaml に重ねて使う（このフォルダで実行する）：
 #   docker compose -f compose.yaml -f compose.app.yaml up -d --build
-#   curl http://localhost:8080/students
+#   curl http://localhost:8080/students/1/transcript   （Windows の PowerShell では curl.exe）
 
 services:
   app:
@@ -11,7 +11,8 @@ services:
       # コンテナの中から見た DB は、localhost ではなく、サービス名 db（Docker 編 06 章 1 節）
       SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/grades_db
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: ${POSTGRES_PASSWORD:?.env に POSTGRES_PASSWORD を設定してください}
+      # アプリは DB_PASSWORD を読む（application.properties の ${DB_PASSWORD}。起動時にも確認する）
+      DB_PASSWORD: ${POSTGRES_PASSWORD:?.env に POSTGRES_PASSWORD を設定してください}
     ports:
       - "127.0.0.1:8080:8080"
     depends_on:
