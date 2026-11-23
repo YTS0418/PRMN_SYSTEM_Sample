@@ -1,5 +1,7 @@
 # frontend — フロントエンド編（Vaadin）のサンプル
 
+[🏠 サンプルの目次](../README.md#目次) ｜ [📖 対応する資料：フロントエンド編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/00_はじめに.md)
+
 資料：[フロントエンド編（Vaadin）](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/00_はじめに.md)。成績管理システムの画面を、**Vaadin 25（LTS）**で作った例です。ログイン（DB 認証・ロール）と、権限のテストを含みます。この README だけで、動かせます。
 
 > [!NOTE]
@@ -9,8 +11,8 @@
 
 | フォルダ | 内容 | 対応する資料 |
 |---|---|---|
-| [`db/`](db/) | テーブル定義とサンプルデータ。**`users` テーブル**（ログイン用）を含む | データベース編、フロントエンド編 11 章 |
-| [`grades-vaadin/`](grades-vaadin/) | Vaadin（Spring Boot）のアプリ | フロントエンド編 |
+| [`db/`](db/) | テーブル定義とサンプルデータ。**`users` テーブル**（ログイン用）を含む | [データベース編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/00_はじめに.md)、フロントエンド編 [11 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/11_DB認証とロール.md) |
+| [`grades-vaadin/`](grades-vaadin/) | Vaadin（Spring Boot）のアプリ | [フロントエンド編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/00_はじめに.md) |
 
 ### 画面（ビュー）とアクセスできる人
 
@@ -23,36 +25,40 @@
 | 成績の登録 | `/enrollments/register` | `成績登録ビュー` | 教員 |
 | 成績一覧 | `/students/{学生番号}/transcript` | `成績一覧ビュー` | 教員、**本人の学生だけ**（ユースケースで確認） |
 
-共通の外枠（メニュー、上のバー）は `メインレイアウト` です。
+共通の外枠（メニュー、上のバー）は `メインレイアウト` です（[04 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/04_レイアウト.md)）。ビューとルーティングは [03 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/03_ビューとルーティング.md)、ログインは [10 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/10_ログインの基本.md)・[11 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/11_DB認証とロール.md)にあります。
 
 資料の画像を撮るための**見本の画面**もあります（教員だけ。メニューには出しません）。資料のコードを、そのまま動かした画面で、見本の `// snippet: 名前` 〜 `// end snippet` の間が、資料に載せているコードと同じものです（Lecture の `check_snippets.py` で、一致を確かめます）。
 
 | URL | 内容（フロントエンド編の章） |
 |---|---|
-| `/demo/layout` | レイアウト、余白、配置、FormLayout、Tabs、Details（04 章） |
-| `/demo/input` | TextField の各状態、TextArea、EmailField、NumberField、Checkbox、Select、ComboBox、RadioButtonGroup、CheckboxGroup など（05 章） |
-| `/demo/button` | ボタンの種類（05 章） |
-| `/demo/display` | 見出し、段落、アイコン、Avatar、ProgressBar（05 章） |
-| `/demo/feedback` | Notification の種類、ConfirmDialog、Dialog、ユースケースの例外の表示（05・09 章） |
-| `/demo/navigation` | RouterLink、SideNav（03 章） |
-| `/demo/events` | 値の変更のイベント（06 章） |
-| `/demo/grid` | Grid の列、並べ替え、部品の列、選択（07 章） |
-| `/demo/form` | Binder の入力チェックの表示（08 章） |
-| `/demo/login` | LoginForm の文言とエラー（10 章） |
-| `/demo/security` | 入力された文字の表示：Span と Html の違い（12 章） |
-| `/demo/theme` | CSS のクラス名、変数の上書き、ダークモード（13 章） |
-| `/demo/advanced` | Upload、Signals（A4） |
+| `/demo/layout` | レイアウト、余白、配置、FormLayout、Tabs、Details（[04 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/04_レイアウト.md)） |
+| `/demo/input` | TextField の各状態、TextArea、EmailField、NumberField、Checkbox、Select、ComboBox、RadioButtonGroup、CheckboxGroup など（[05 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/05_基本コンポーネント.md)） |
+| `/demo/button` | ボタンの種類（[05 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/05_基本コンポーネント.md)） |
+| `/demo/display` | 見出し、段落、アイコン、Avatar、ProgressBar（[05 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/05_基本コンポーネント.md)） |
+| `/demo/feedback` | Notification の種類、ConfirmDialog、Dialog、ユースケースの例外の表示（[05 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/05_基本コンポーネント.md)・[09](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/09_4層とつなぐ.md) 章） |
+| `/demo/navigation` | RouterLink、SideNav（[03 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/03_ビューとルーティング.md)） |
+| `/demo/events` | 値の変更のイベント（[06 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/06_イベントと画面の仕組み.md)） |
+| `/demo/grid` | Grid の列、並べ替え、部品の列、選択（[07 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/07_Gridで一覧を表示する.md)） |
+| `/demo/form` | Binder の入力チェックの表示（[08 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/08_フォームとBinder.md)） |
+| `/demo/login` | LoginForm の文言とエラー（[10 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/10_ログインの基本.md)） |
+| `/demo/security` | 入力された文字の表示：Span と Html の違い（[12 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/12_Webアプリの脅威と対策.md)） |
+| `/demo/theme` | CSS のクラス名、変数の上書き、ダークモード（[13 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/13_テーマとスタイル.md)） |
+| `/demo/advanced` | Upload、Signals（[A4](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/A4_発展的な機能.md)） |
 
 ### 層との対応（`grades-vaadin/src/main/java/grades/`）
+
+4 層の考え方は、[4層編 02 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/02_4層の役割.md)と、[フロントエンド編 09 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/09_4層とつなぐ.md)にあります。
 
 | 層 | パッケージ | 内容 |
 |---|---|---|
 | Presentation | `presentation` | ビュー、レイアウト、`セキュリティ設定`、入力フォーム（Binder 用） |
 | Application | `usecase` | ユースケース（`@PreAuthorize` で権限を確認）、`ログインユーザー`、`成績の権限` |
-| Domain | `domain` | 業務のルール（4層編の `step3-spring` と同じ。学科を足している） |
+| Domain | `domain` | 業務のルール（4層編の `step3-spring` と同じ。学科を足している。[フロントエンド編 09 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/09_4層とつなぐ.md)） |
 | Infrastructure | `dataaccess.jdbc` | JdbcClient のリポジトリ、`DBユーザー実装`（`users` を読む） |
 
 ## 準備
+
+プロジェクトの作り方と、起動までの手順は、[フロントエンド編 02 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/02_環境構築とプロジェクト作成.md)にあります。
 
 | 必要なもの | 備考 |
 |---|---|
@@ -108,15 +114,15 @@ cd grades-vaadin
 `db/02_seed.sql` には、パスワードを **BCrypt でハッシュ化した値**だけを保存しています。
 
 > [!CAUTION]
-> これは、学習用の**仮のユーザーとパスワード**です。公開するアプリには、絶対に持ち込まないでください（フロントエンド編 A2）。
+> これは、学習用の**仮のユーザーとパスワード**です。公開するアプリには、絶対に持ち込まないでください（[フロントエンド編 A2](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/A2_本番ビルドとデプロイ.md)）。
 
 ### 確かめてみよう（権限）
 
 - `teacher01` で、学生一覧 → 行を選ぶと、成績一覧が見られる
-- `student01` でログインして、アドレスを `/students/2/transcript` に変えても、「**この成績は表示できません**」と出る（**ユースケースが拒否**する。フロントエンド編 12 章）
+- `student01` でログインして、アドレスを `/students/2/transcript` に変えても、「**この成績は表示できません**」と出る（**ユースケースが拒否**する。[フロントエンド編 12 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/12_Webアプリの脅威と対策.md)）
 - `student01` で `/students/register` を開くと、**アクセスできない**（ビューの注釈が拒否する）
 - 学生を登録するときの入学年度を、1999 にすると、画面の入力チェックが、エラーを表示する
-- 成績の登録で、点数に `150` を入れると、**Domain の検査**（`履修`）が、「点数は0〜100にしてください」を通知に出す。この画面は、点数の範囲を、画面では制限していない（業務のルールの本体は Domain。フロントエンド編 08・09 章）
+- 成績の登録で、点数に `150` を入れると、**Domain の検査**（`履修`）が、「点数は0〜100にしてください」を通知に出す。この画面は、点数の範囲を、画面では制限していない（業務のルールの本体は Domain。フロントエンド編 [08](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/08_フォームとBinder.md)・[09 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/09_4層とつなぐ.md)）
 - 間違ったパスワードでは、「ユーザー名またはパスワードが違います」と出る（どちらが違うかは、教えない）
 
 ## テスト
@@ -126,7 +132,7 @@ cd grades-vaadin
 ./mvnw test
 ```
 
-`権限のテスト` が動きます。データベースも、ブラウザも使わずに、**ユースケースの権限**（学生が他の学生の成績を見られないこと、など）を確かめます（フロントエンド編 A1）。
+`権限のテスト` が動きます。データベースも、ブラウザも使わずに、**ユースケースの権限**（学生が他の学生の成績を見られないこと、など）を確かめます（[フロントエンド編 A1](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/A1_画面のテスト.md)）。
 
 > [!NOTE]
 > テストのクラス名は、日本語の「〜テスト」です。Maven の既定では見つからないので、`pom.xml` で、`**/*テスト.java` を対象に指定しています。
@@ -139,7 +145,7 @@ cd grades-vaadin
 java -jar target/grades-vaadin-0.0.1-SNAPSHOT.jar
 ```
 
-`-Pproduction` を付けると、開発用の部品（`vaadin-dev`）が jar に入らず、起動のログに `Vaadin is running in production mode` と出ます（フロントエンド編 A2）。
+`-Pproduction` を付けると、開発用の部品（`vaadin-dev`）が jar に入らず、起動のログに `Vaadin is running in production mode` と出ます（[フロントエンド編 A2](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/A2_本番ビルドとデプロイ.md)。Docker で動かすときは、[Docker 編 05 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/05_Dockerfileとイメージ作成.md)）。
 
 ## `pom.xml` の要点
 
@@ -150,7 +156,11 @@ java -jar target/grades-vaadin-0.0.1-SNAPSHOT.jar
 | `spring-boot-starter-security` | ログイン・ロール |
 | `dev` profile（`vaadin-dev`） | **開発モードで必要**。`-Pproduction` を付けると、無効になる |
 | `production` profile | 画面用のファイルを最適化する（`build-frontend`） |
-| `@StyleSheet(Lumo.STYLESHEET)`（起動クラス） | テーマの指定。**指定しないと、`Notification` の種類などの色が反映されない**（フロントエンド編 13 章） |
+| `@StyleSheet(Lumo.STYLESHEET)`（起動クラス） | テーマの指定。**指定しないと、`Notification` の種類などの色が反映されない**（[フロントエンド編 13 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/13_テーマとスタイル.md)） |
 
 > [!WARNING]
-> **このサンプルには、パスワードの再設定、ログイン失敗の回数制限、二要素認証がありません。** 学習用です。公開する場合は、フロントエンド編 12 章のチェックリストと、A3 を確認してください。
+> **このサンプルには、パスワードの再設定、ログイン失敗の回数制限、二要素認証がありません。** 学習用です。公開する場合は、[フロントエンド編 12 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/12_Webアプリの脅威と対策.md)のチェックリストと、[A3](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/A3_発展的な認証.md)を確認してください。
+
+---
+
+[🏠 サンプルの目次](../README.md#目次) ｜ [📖 対応する資料：フロントエンド編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/フロントエンド/00_はじめに.md)

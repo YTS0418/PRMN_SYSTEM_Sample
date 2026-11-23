@@ -1,5 +1,7 @@
 # database — データベース編のサンプル
 
+[🏠 サンプルの目次](../README.md#目次) ｜ [📖 対応する資料：データベース編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/00_はじめに.md)
+
 資料：[データベース編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/00_はじめに.md)。テーブル定義とサンプルデータ（SQL）と、Java から PostgreSQL を使う例（JDBC）です。この README だけで、動かせます。
 
 > [!NOTE]
@@ -9,8 +11,8 @@
 
 | フォルダ | 内容 | 対応する資料 |
 |---|---|---|
-| [`db/`](db/) | テーブル定義（`01_schema.sql`）とサンプルデータ（`02_seed.sql`） | データベース編 06〜11 章 |
-| [`step2-jdbc/`](step2-jdbc/) | 4 層に分けた成績管理の、保存先を **PostgreSQL**（JdbcClient）にしたもの | データベース編 12 章 |
+| [`db/`](db/) | テーブル定義（`01_schema.sql`）とサンプルデータ（`02_seed.sql`） | データベース編 [06](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/06_物理設計.md)〜[11](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/11_トランザクション.md) 章 |
+| [`step2-jdbc/`](step2-jdbc/) | 4 層に分けた成績管理の、保存先を **PostgreSQL**（JdbcClient）にしたもの | データベース編 [12 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/12_JavaからDBを使う_JDBC.md) |
 
 ## 準備
 
@@ -22,7 +24,7 @@
 
 ## データベースを用意する
 
-PostgreSQL にデータベース `grades_db` を作り、テーブルとサンプルデータを入れます。**このフォルダ**（`database/`）で実行してください。
+PostgreSQL にデータベース `grades_db` を作り、テーブルとサンプルデータを入れます。**このフォルダ**（`database/`）で実行してください。SQL の書き方は、[データベース編 08 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/08_SQL_DDL.md)・[09 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/09_SQL_基本操作.md)・[10 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/10_SQL_応用.md)にあります。
 
 ```bash
 psql -U postgres -c "CREATE DATABASE grades_db"
@@ -66,6 +68,8 @@ psql -U postgres -d grades_db -f db/02_seed.sql
 
 ## step2-jdbc：PostgreSQL 版を動かす
 
+JdbcClient の使い方と、Repository の実装は、[データベース編 12 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/12_JavaからDBを使う_JDBC.md)にあります。
+
 ```bash
 cd step2-jdbc
 mvn compile exec:java
@@ -85,7 +89,7 @@ mvn compile exec:java
 
 ## 保存先を差し替えても、他の層は変わらない
 
-`step2-jdbc` の `domain`・`usecase`・`presentation` は、メモリ版（4層アーキテクチャ編の `step1-memory`）と、**同じ内容**です。保存先を差し替えたのは、`dataaccess` と `Main` だけです。このリポジトリの `architecture/` と比べて、確かめられます（リポジトリのルートで実行）。
+`step2-jdbc` の `domain`・`usecase`・`presentation` は、メモリ版（4層アーキテクチャ編の `step1-memory`）と、**同じ内容**です。保存先を差し替えたのは、`dataaccess` と `Main` だけです（なぜ他の層が変わらないのかは、[4層編 03 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/03_依存の向きとインタフェース.md)で説明しています）。このリポジトリの `architecture/` と比べて、確かめられます（リポジトリのルートで実行）。
 
 ```bash
 diff -r architecture/step1-memory/src/grades/domain       database/step2-jdbc/src/grades/domain
@@ -100,3 +104,7 @@ diff -r architecture/step1-memory/src/grades/presentation database/step2-jdbc/sr
 | 1 つ目・2 つ目のパス | 比べる 2 つのフォルダ |
 
 何も表示されなければ、同じ内容です。
+
+---
+
+[🏠 サンプルの目次](../README.md#目次) ｜ [📖 対応する資料：データベース編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/00_はじめに.md)

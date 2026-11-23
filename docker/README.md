@@ -1,5 +1,7 @@
 # docker — Docker / Compose 編のサンプル
 
+[🏠 サンプルの目次](../README.md#目次) ｜ [📖 対応する資料：Docker / Compose 編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/00_はじめに.md)
+
 資料：[Docker / Compose 編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/00_はじめに.md)。PostgreSQL と pgAdmin、そしてアプリを、Docker Compose で動かす例です。
 
 > [!WARNING]
@@ -12,12 +14,12 @@
 
 | ファイル | 内容 | 対応する資料 |
 |---|---|---|
-| [`compose.yaml`](compose.yaml) | DB（PostgreSQL 18）と pgAdmin。初回起動で `database/db` の SQL を流す | Docker 編 04 章 |
-| [`compose.app.yaml`](compose.app.yaml) | アプリ（`step3-spring`）を加える。`compose.yaml` に重ねて使う | Docker 編 06 章 |
-| [`compose.vaadin.yaml`](compose.vaadin.yaml) | アプリを Vaadin 版（`grades-vaadin`）にする。`compose.yaml` に重ねて使う | Docker 編 05 章 7 節 |
-| [`.env.example`](.env.example) | パスワードの見本（値は空）。コピーして `.env` を作る | Docker 編 04 章 6 節 |
-| [`../architecture/step3-spring/Dockerfile`](../architecture/step3-spring/Dockerfile) | `step3-spring` のイメージの作り方（マルチステージ） | Docker 編 05 章 |
-| [`../frontend/grades-vaadin/Dockerfile`](../frontend/grades-vaadin/Dockerfile) | `grades-vaadin` のイメージの作り方（`-Pproduction`） | Docker 編 05 章 7 節 |
+| [`compose.yaml`](compose.yaml) | DB（PostgreSQL 18）と pgAdmin。初回起動で `database/db` の SQL を流す | Docker 編 [04 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/04_Docker_Compose入門.md) |
+| [`compose.app.yaml`](compose.app.yaml) | アプリ（`step3-spring`）を加える。`compose.yaml` に重ねて使う | Docker 編 [06 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/06_アプリとDBをComposeで動かす.md) |
+| [`compose.vaadin.yaml`](compose.vaadin.yaml) | アプリを Vaadin 版（`grades-vaadin`）にする。`compose.yaml` に重ねて使う | Docker 編 [05 章 7 節](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/05_Dockerfileとイメージ作成.md) |
+| [`.env.example`](.env.example) | パスワードの見本（値は空）。コピーして `.env` を作る | Docker 編 [04 章 6 節](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/04_Docker_Compose入門.md) |
+| [`../architecture/step3-spring/Dockerfile`](../architecture/step3-spring/Dockerfile) | `step3-spring` のイメージの作り方（マルチステージ） | Docker 編 [05 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/05_Dockerfileとイメージ作成.md) |
+| [`../frontend/grades-vaadin/Dockerfile`](../frontend/grades-vaadin/Dockerfile) | `grades-vaadin` のイメージの作り方（`-Pproduction`） | Docker 編 [05 章 7 節](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/05_Dockerfileとイメージ作成.md) |
 
 ## 準備
 
@@ -32,7 +34,7 @@ JDK と Maven は、**要りません**（ビルドもコンテナの中で行�
 
 ### パスワードを決める
 
-`.env.example` をコピーして `.env` を作り、パスワードを入れます。`.env` は Git に載りません（ルートの `.gitignore`）。
+`.env.example` をコピーして `.env` を作り、パスワードを入れます。`.env` は Git に載りません（ルートの `.gitignore`。何を Git に入れて、何を入れないかは、[Docker 編 07 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/07_チーム開発での使い方.md)）。
 
 ```bash
 cp .env.example .env          # Windows の PowerShell では  Copy-Item .env.example .env
@@ -45,7 +47,7 @@ cp .env.example .env          # Windows の PowerShell では  Copy-Item .env.ex
 | `DB_PORT` | パソコン側の DB のポート番号。空なら `5432`。5432 が使用中なら `5433` など（[よくあるミス](#よくあるミス)） |
 
 > [!CAUTION]
-> パスワードは、自分で決めた、推測されにくいものにします。**`.env.example` に、実際の値を書かないでください**。ポートは、すべて `127.0.0.1`（このパソコンだけ）に公開しています。外に公開しないでください。
+> パスワードは、自分で決めた、推測されにくいものにします。**`.env.example` に、実際の値を書かないでください**。ポートは、すべて `127.0.0.1`（このパソコンだけ）に公開しています。外に公開しないでください（公開するときの考え方は、[Docker 編 08 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/08_本番デプロイの考え方.md)）。
 
 ## 1. DB と pgAdmin だけ動かす
 
@@ -59,11 +61,13 @@ docker compose ps             # db が healthy になるまで待つ
 | psql など（このパソコンから） | `localhost:5432`（`DB_PORT` を変えたときは、その番号）、データベース `grades_db`、ユーザー `postgres` |
 | pgAdmin（ブラウザ） | <http://localhost:5050>（メールアドレス `admin@example.com`、パスワードは `PGADMIN_PASSWORD`） |
 
-pgAdmin でサーバーを登録するとき、Host name/address は **`db`** にします（`localhost` ではありません。Docker 編 04 章 5 節）。
+pgAdmin でサーバーを登録するとき、Host name/address は **`db`** にします（`localhost` ではありません。[Docker 編 04 章 5 節](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/04_Docker_Compose入門.md)）。
 
 アプリを IDE で動かすなら、これだけで足ります（接続先は `localhost:5432` のまま。`DB_PORT` を変えたときは、環境変数 `SPRING_DATASOURCE_URL` に `jdbc:postgresql://localhost:5433/grades_db` のように設定します。環境変数 `DB_PASSWORD` に、`POSTGRES_PASSWORD` と同じ値を設定します）。
 
 ## 2. アプリも Compose で動かす
+
+アプリと DB をつなぐ仕組み（ネットワークと、起動の順序）は、[Docker 編 06 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/06_アプリとDBをComposeで動かす.md)にあります。
 
 ### step3-spring（Web API）
 
@@ -95,6 +99,8 @@ docker compose -f compose.yaml -f compose.vaadin.yaml up -d --build
 
 ## 止める・やり直す
 
+コマンドの意味は、[Docker 編 03 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/03_Dockerの基本操作.md)と[04 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/04_Docker_Compose入門.md)にあります。
+
 | やりたいこと | コマンド |
 |---|---|
 | 止める（データは残る） | `docker compose stop` |
@@ -107,6 +113,8 @@ docker compose -f compose.yaml -f compose.vaadin.yaml up -d --build
 > `down -v` は、DB のデータを**すべて消します**。
 
 ## よくあるミス
+
+資料にも、[04 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/04_Docker_Compose入門.md)・[06 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/06_アプリとDBをComposeで動かす.md)に、つまずきやすい点があります。
 
 | ミス | 原因・対処 |
 |---|---|
@@ -121,3 +129,7 @@ docker compose -f compose.yaml -f compose.vaadin.yaml up -d --build
 | `localhost` のまま接続して失敗する（アプリのログ） | コンテナの中の `localhost` は、そのコンテナ自身。環境変数 `SPRING_DATASOURCE_URL` で、`db` を指しているか確認する |
 | SQL を直したのに、反映されない | 初期化は初回だけ。`docker compose down -v` で作り直す |
 | `./mvnw: not found`（ビルド中） | `mvnw` の改行コードが CRLF になっている。各アプリの `.gitattributes` で LF に固定しているので、clone し直す |
+
+---
+
+[🏠 サンプルの目次](../README.md#目次) ｜ [📖 対応する資料：Docker / Compose 編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/Docker/00_はじめに.md)

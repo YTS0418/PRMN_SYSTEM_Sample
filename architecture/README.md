@@ -1,5 +1,7 @@
 # architecture — 4層アーキテクチャ編のサンプル
 
+[🏠 サンプルの目次](../README.md#目次) ｜ [📖 対応する資料：4層アーキテクチャ編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/00_はじめに.md)
+
 資料：[4層アーキテクチャ編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/00_はじめに.md)。同じ成績管理システムを、4 層に分けて作った例です。この README だけで、動かせます。
 
 > [!NOTE]
@@ -9,12 +11,12 @@
 
 | フォルダ | 内容 | 対応する資料 |
 |---|---|---|
-| [`step1-memory/`](step1-memory/) | 4 層に分けた成績管理。保存先は**メモリ**（コンソールで操作） | 4層編 04・06 章 |
-| [`step3-spring/`](step3-spring/) | **Spring Boot** で書き直したもの（Web API）。保存先は PostgreSQL | 4層編 07 章 |
-| [`db/`](db/) | `step3-spring` が使う、テーブル定義とサンプルデータ（SQL） | データベース編 06〜11 章 |
+| [`step1-memory/`](step1-memory/) | 4 層に分けた成績管理。保存先は**メモリ**（コンソールで操作） | 4層編 [04 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/04_Javaで4層を作る.md)・[06 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/06_サンプル実装の読み方.md) |
+| [`step3-spring/`](step3-spring/) | **Spring Boot** で書き直したもの（Web API）。保存先は PostgreSQL | 4層編 [07 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/07_Spring_Bootで書き直す.md) |
+| [`db/`](db/) | `step3-spring` が使う、テーブル定義とサンプルデータ（SQL） | データベース編 [06](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/06_物理設計.md)〜[11](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/11_トランザクション.md) 章 |
 
 > [!NOTE]
-> 保存先を PostgreSQL（JdbcClient）に差し替えた、素の Java 版（step2）は、データベース編のサンプル（[`../database/step2-jdbc/`](../database/step2-jdbc/)）にあります。
+> 保存先を PostgreSQL（JdbcClient）に差し替えた、素の Java 版（step2）は、データベース編のサンプル（[`../database/step2-jdbc/`](../database/step2-jdbc/)）にあります（資料は、[データベース編 12 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/12_JavaからDBを使う_JDBC.md)）。
 
 | 層 | パッケージ | step1 | step3 |
 |---|---|---|---|
@@ -23,6 +25,8 @@
 | ドメイン層 | `domain` | `学生`、`履修`、`履修一覧` など | **同じ** |
 | データアクセス層 | `dataaccess` | `メモリ…リポジトリ` | `Jdbc…リポジトリ`（`@Repository`） |
 | 組み立て | — | `Main` | Spring（DI コンテナ） |
+
+各層の役割と、依存の向き（どの層がどの層を使ってよいか）は、[4層編 02 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/02_4層の役割.md)と[03 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/03_依存の向きとインタフェース.md)で説明しています。
 
 ## 準備
 
@@ -57,7 +61,7 @@ java src/grades/Main.java
 
 ## データベースを用意する（step3 の前に）
 
-PostgreSQL にデータベース `grades_db` を作り、テーブルとサンプルデータを入れます。**このフォルダ**（`architecture/`）で実行してください。
+PostgreSQL にデータベース `grades_db` を作り、テーブルとサンプルデータを入れます。**このフォルダ**（`architecture/`）で実行してください。テーブルの作り方と SQL の基本は、[データベース編 08 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/08_SQL_DDL.md)・[09 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/09_SQL_基本操作.md)にあります。
 
 ```bash
 psql -U postgres -c "CREATE DATABASE grades_db"
@@ -97,9 +101,11 @@ psql -U postgres -d grades_db -f db/02_seed.sql
 
 > パスワードを `.env` などのファイルに書く場合は、Git に入れないでください（`.gitignore` に `.env` を入れてあります）。
 
-設定していないと、「環境変数 `DB_PASSWORD` が設定されていません」と表示して終了します。
+設定していないと、「環境変数 `DB_PASSWORD` が設定されていません」と表示して終了します。Java からデータベースへの接続のしかたは、[データベース編 12 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/データベース/12_JavaからDBを使う_JDBC.md)にあります。
 
 ## step3-spring：Spring Boot 版を動かす
+
+Spring Boot の考え方と、step1 から書き直す手順は、[4層編 05 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/05_フレームワークとSpring.md)と[07 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/07_Spring_Bootで書き直す.md)にあります。
 
 ```bash
 cd step3-spring
@@ -115,6 +121,8 @@ cd step3-spring
 ログに `Started 成績管理アプリ` と出れば起動成功です。ポート 8080 で待ち受けます（止めるときは `Ctrl+C`）。接続先は `src/main/resources/application.properties` にあります。
 
 ### API
+
+エンドポイントの作り方と、例外をステータスコードに変える仕組みは、[4層編 07 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/07_Spring_Bootで書き直す.md)を見てください。
 
 | 機能 | HTTP | URL | 成功時 |
 |---|---|---|---|
@@ -193,7 +201,7 @@ Invoke-RestMethod -Method Put -Uri http://localhost:8080/students/1/enrollments 
 
 ## 層の約束を確認する
 
-4 層の「依存の向き」は、`import` 文を見れば確認できます（[4層編 06 章 6 節](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/06_サンプル実装の読み方.md)）。
+4 層の「依存の向き」（[4層編 03 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/03_依存の向きとインタフェース.md)）は、`import` 文を見れば確認できます（[4層編 06 章 6 節](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/06_サンプル実装の読み方.md)）。
 
 ```bash
 # dataaccess を import しているのは、Main だけのはず
@@ -213,3 +221,6 @@ grep -h "^import" step1-memory/src/grades/domain/*.java | sort -u
 | `*.java` | そのフォルダの、名前が `.java` で終わるファイルすべて |
 | `\| sort -u` | 左のコマンドの結果を並べ替えて、同じ行を 1 つにまとめる（`\|` は、結果を次のコマンドに渡す記号） |
 
+---
+
+[🏠 サンプルの目次](../README.md#目次) ｜ [📖 対応する資料：4層アーキテクチャ編](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/00_はじめに.md)
