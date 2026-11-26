@@ -1,0 +1,24 @@
+' Docker Compose で動くサービスと、つなぎ方（docker/README.md）
+@startuml compose-services
+!include ../_common.iuml
+hide stereotype
+skinparam rectangle<<optional>> {
+  BorderStyle dashed
+}
+left to right direction
+rectangle "このパソコン（ポートは 127.0.0.1 だけに公開）" as host #f4f4f4 {
+  rectangle "ブラウザ" as browser #d6eaf8
+  rectangle "psql・IDE のアプリ" as tool #d6eaf8
+}
+rectangle "Docker Compose のネットワーク" as net #eef6ff {
+  rectangle "pgadmin\n（DB の管理画面）" as pgadmin #white
+  rectangle "app\n（step3-spring または grades-vaadin）" as app <<optional>> #d5f5e3
+  database "db\nPostgreSQL 18" as db #fff3cd
+}
+browser --> pgadmin : localhost:5050
+browser --> app : localhost:8080
+tool --> db : localhost:5432\n（DB_PORT で変更）
+pgadmin --> db : Host = db
+app --> db : db:5432
+note bottom of app : compose.app.yaml または\ncompose.vaadin.yaml で追加する\n（点線の枠）
+@enduml

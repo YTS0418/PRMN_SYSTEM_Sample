@@ -7,6 +7,10 @@
 > [!TIP]
 > 資料では考え方（なぜ・何を・どこに）を説明し、このリポジトリでは**どう書くか**を確認します。資料を読みながら、このリポジトリのコードを IDE で開いておくのがおすすめです。
 
+<img src="docs/images/frontend/students.png" alt="frontend/ で動く、成績管理システムの学生一覧の画面（教員でログインした画面）" width="560">
+
+*`frontend/` で動く、完成した画面の例です。*
+
 ## 目次
 
 資料ごとにフォルダを分けてあり、**各フォルダは、それだけで動かせます**（必要な SQL なども、フォルダの中に入っています）。動かし方は、各フォルダの `README.md` にあります。
@@ -25,8 +29,12 @@ flowchart LR
     arch["architecture/<br>step1（メモリ）<br>step3（Spring Boot）"]
     up["upstream/<br>ユースケース記述"]
     fe["frontend/<br>Vaadin・ログイン"]
+    dk["docker/<br>Compose・Dockerfile"]
     up -.->|"元になる"| arch
     up -.->|"元になる"| fe
+    dk -.->|"DB を動かす"| db
+    dk -.->|"アプリを動かす"| arch
+    dk -.->|"アプリを動かす"| fe
 ```
 
 > [!NOTE]
@@ -46,7 +54,9 @@ flowchart LR
 
 ### 層と資料の呼び名
 
-資料（4層アーキテクチャ編）とは、層の呼び名とパッケージ名が次のように対応します。
+資料（[4層アーキテクチャ編 02 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/4層アーキテクチャ/02_4層の役割.md)）とは、層の呼び名とパッケージ名が次のように対応します。
+
+<img src="docs/images/architecture/dia-00-01-layers-map.svg" alt="4 層の関係。Presentation から Application、Domain へ進み、Infrastructure は Domain のインタフェースを実装して DB につながる" width="640">
 
 | このサンプル（ガイドライン） | パッケージ | 資料での呼び名 | 役割 |
 |---|---|---|---|
@@ -56,6 +66,8 @@ flowchart LR
 | データアクセス層 | `grades.dataaccess` | Infrastructure 層 | 保存の窓口を、メモリや PostgreSQL で実装する |
 
 ### ユースケース 1 つ = クラス 1 つ
+
+ユースケースの考え方は、[上流工程 05 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/上流工程/05_ユースケースに落とし込む.md)にあります。
 
 `usecase` パッケージには、ユースケースの名前をそのままクラス名にしたクラスを置きます。どのクラスも、メソッドは `実行する` の 1 つだけです。
 
@@ -70,6 +82,8 @@ flowchart LR
 ユースケース記述と、コードから起こした確認用の文章は、[`upstream/ユースケース記述.md`](upstream/ユースケース記述.md) にあります。
 
 ### 日本語プログラミング
+
+業務の言葉をそのままコードの名前にする考え方（ユビキタス言語）は、[上流工程 03 章](https://github.com/YTS0418/PRMN_SYSTEM_Lecture/blob/main/上流工程/03_メンタルモデルを理解する.md)にあります。
 
 クラス名・メソッド名・変数名は、**日本語**で書いています。ユースケース記述に出てくる言葉（学生、履修、点数、保存する など）を、そのままコードの名前にするためです。
 
